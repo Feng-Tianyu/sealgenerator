@@ -60,12 +60,14 @@
       <button @click="createCanvas" class="editbutton">Edit</button>
       <button @click="collectThis" class="collect">Collect</button>
     </div>
-    <div class="editimg" v-if="edit">
+    <Transition name="bounce">
+      <div class="editimg" v-if="edit">
       <canvas ref="canvas" width="150" height="150" class="canvas"></canvas>
-      <button @click="editcolor = 'black'">black</button>
-      <button @click="editcolor = 'white'">white</button>
-      <button @click="finishedit">finish</button>
+      <button class="black" @click="editcolor = 'black'">black</button>
+      <button class="white" @click="editcolor = 'white'">white</button>
+      <button class="finish" @click="finishedit">finish</button>
     </div>
+    </Transition>
     <button class="gotocreate" @click="gotocreate()">Make Seal</button>
   </div>
 </template>
@@ -167,6 +169,7 @@ export default {
     collectThis() {
       // 将编辑完成的图片保存到数组中
       this.$store.commit("addImage", this.editedimg);
+      alert('保存成功')
       // this.currentid = this.currentid + 1;
       // console.log(
       //   this.$store.state.editedImages[this.currentid - 1].id,
@@ -376,11 +379,11 @@ img:not([src]) {
   position: absolute;
   border: solid 2px #aeaeae;
   border-radius: 8px;
-  height: 240px;
-  width: 240px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 30vh;
+  width: 30vh;
+  top: 35%;
+  left: calc(50% - 15vh);
+  /* transform: translate(-50%, -50%); */
   background-color: #f5f5f5;
   box-shadow: 2px 2px -2px -2px #3f3b3b44;
 }
@@ -429,5 +432,60 @@ img:not([src]) {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+.bounce-enter-active {
+  animation: bounce-in 0.3s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.3s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.black{
+  border-radius: 2px;
+  background-color: #8d8d8d;
+  color: #ffffff;
+  margin-top: 10px;
+  border: none;
+  transition: all 0.3s;
+}
+.black:hover{
+cursor: pointer;
+background-color: #4d4d4d;
+}
+.white{
+  border-radius: 2px;
+  background-color: #8d8d8d;
+  color: #ffffff;
+  margin-top: 10px;
+  border: none;
+  transition: all 0.3s;
+}
+.white:hover{
+cursor: pointer;
+background-color: #d7d7d7;
+color: #000000;
+}
+.finish{
+  border-radius: 2px;
+  background-color: #8d8d8d;
+  color: #ffffff;
+  margin-top: 10px;
+  border: none;
+  transition: all 0.3s;
+}
+.finish:hover{
+cursor: pointer;
+background-color:#367d39;
 }
 </style>
